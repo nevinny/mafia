@@ -9,7 +9,7 @@ class Linking extends Soldier
 
         foreach ($text as $link) {
             if ($link = $this->isCss($link)) {
-//                var_dump(file_get_contents($link));
+                $this->getCSSRecursive($link);
             }
         }
 
@@ -31,9 +31,21 @@ class Linking extends Soldier
         return false;
     }
 
+    /**
+     * @param null $link
+     * @return string
+     */
     public function getStorePath($link = null):string
     {
         // todo: filter filename
-        return $link;
+        return $this->getDomain() . '/' . $link;
+    }
+
+    /**
+     * @param $link
+     */
+    private function getCSSRecursive($link)
+    {
+        // var_dump(file_get_contents($link));
     }
 }
