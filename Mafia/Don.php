@@ -22,6 +22,9 @@ class Don
         $output = new ConsoleOutput();
         $count = count($links);
         $progress = new ProgressBar($output, $count);
+        $progress->setFormat(
+            '<info>%current%/%max%</info>[%bar%]<comment>%percent:3s%%</comment> in %elapsed:6s% (%memory:6s%)'
+        );
 
         $progress->start();
         foreach ($links as $link) {

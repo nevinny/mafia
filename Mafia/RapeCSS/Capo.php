@@ -40,9 +40,9 @@ class Capo
     private function planSquad(\DOMDocument $html, string $link)
     {
         $this->squad = [
-//            new Linking($html, $link),
+            new Inline($html, $link),
             new Embedding($html, $link),
-            new Inline($html, $link)
+            new Linking($html, $link),
         ];
     }
 

@@ -1,6 +1,8 @@
 <?php
 namespace Mafia\RapeCSS;
 
+use Mafia\Adviser;
+
 class Linking extends Soldier
 {
     public function store():bool
@@ -9,7 +11,8 @@ class Linking extends Soldier
 
         foreach ($text as $link) {
             if ($link = $this->isCss($link)) {
-                $this->getCSSRecursive($link);
+                $style = $this->getCSSRecursive($link);
+                Adviser::storeLinks($this->getStorePath(), $style);
             }
         }
 
@@ -37,15 +40,23 @@ class Linking extends Soldier
      */
     public function getStorePath($link = null):string
     {
-        // todo: filter filename
-        return $this->getDomain() . '/' . $link;
+        if ($link) {
+            // todo: filter filename
+            $url = parse_url($link);
+            $file = $url['path'];
+            $file = str_replace('/', '_', $file);
+            return $this->getDomain() . '/' . $file;
+        }
+        return $this->getDomain() . '/' . $this->indexCSS;
     }
 
     /**
      * @param $link
+     * @return string
      */
     private function getCSSRecursive($link)
     {
-        // var_dump(file_get_contents($link));
+        $link = preg_replace('/^\/\//','http://', $link);
+        return file_get_contents($link);
     }
 }
