@@ -27,8 +27,12 @@ class Inline extends Soldier
     private function normalizeStyle(\DOMElement $item)
     {
         $style = $item->getAttribute('style');
-        if (strlen($style) && substr($style, -1) !== ';') {
-            $style .= ';';
+        if (strlen($style)) {
+            $style = 'inline{' . $style;
+            if (substr($style, -1) !== ';') {
+                $style .= ';';
+            }
+            $style .= '}';
         }
         return $style;
     }
