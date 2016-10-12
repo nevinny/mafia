@@ -17,14 +17,14 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 class Don
 {
-    public function __construct(Adviser $adviser)
+    public function __construct(array $links)
     {
         $output = new ConsoleOutput();
-        $count = count($adviser->getLinks());
+        $count = count($links);
         $progress = new ProgressBar($output, $count);
 
         $progress->start();
-        foreach ($adviser->getLinks() as $link) {
+        foreach ($links as $link) {
             $link = trim($link);
             new Capo($link);
             $progress->advance();

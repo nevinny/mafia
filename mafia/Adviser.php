@@ -22,27 +22,73 @@ class Adviser
     {
         self::$links = file(self::PUBLIC . 'sacrifice.txt');
 
+        self::createDir(self::CORPSES);
+
         foreach (self::$links as $link) {
+            $link = self::filterLink($link);
             self::createDir($link);
         }
     }
 
+    /**
+     * @param $link
+     * @return string
+     */
+    private static function filterLink($link)
+    {
+        $url = parse_url($link);
+        $dir = explode('.', $url['host']);
+        return self::CORPSES . $dir[1];
+    }
+
+    /**
+     * @return array
+     */
     public function getLinks()
     {
         return self::$links;
     }
 
+    /**
+     * Сохранение данных в файл
+     * @param $file
+     * @param $data
+     */
     public static function storeLinks($file, $data)
     {
         file_put_contents(self::CORPSES . $file, $data, FILE_APPEND | LOCK_EX);
     }
 
-    private static function createDir($link)
+    /**
+     * Создание директорий
+     * @param $dir
+     * @return bool
+     */
+    private static function createDir($dir)
     {
-        $url = parse_url($link);
-        $dir = explode('.', $url['host']);
-        if (!is_dir(self::CORPSES . $dir[1])) {
-            mkdir(self::CORPSES . $dir[1]);
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $dir
+     */
+    public static function clearCorpses(string $dir)
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir . "/" . $object) == "dir")
+                        self::clearCorpses($dir . "/" . $object);
+                    else unlink($dir . "/" . $object);
+                }
+            }
+            reset($objects);
+            rmdir($dir);
         }
     }
 }

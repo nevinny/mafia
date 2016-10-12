@@ -41,7 +41,7 @@ class Capo
     {
         $this->squad = [
 //            new Linking($html, $link),
-//            new Embedding($html, $link),
+            new Embedding($html, $link),
             new Inline($html, $link)
         ];
     }

@@ -19,6 +19,6 @@ class Embedding extends Soldier
 
     public function getStorePath($file = null):string
     {
-        return $this->indexCSS;
+        return $this->getDomain() . '/' . $this->indexCSS;
     }
 }

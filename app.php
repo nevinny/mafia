@@ -1,6 +1,10 @@
 <?php
 
 include 'vendor/autoload.php';
+use Mafia\Don;
+use Mafia\Adviser;
 
-$adviser = new Mafia\Adviser();
-$don = new Mafia\Don($adviser);
+Adviser::clearCorpses(Adviser::CORPSES);
+$adviser = new Adviser();
+
+$don = new Don($adviser->getLinks());
