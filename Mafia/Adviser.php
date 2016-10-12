@@ -36,9 +36,9 @@ class Adviser
      */
     private static function filterLink($link)
     {
+        $link = trim($link);
         $url = parse_url($link);
-        $dir = explode('.', $url['host']);
-        return self::CORPSES . $dir[1];
+        return self::CORPSES . $url['host'];
     }
 
     /**

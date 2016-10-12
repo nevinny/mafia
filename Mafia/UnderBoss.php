@@ -9,5 +9,13 @@ namespace Mafia;
  */
 class UnderBoss
 {
+    private static $link = 'http://www.alexa.com/topsites';
 
+    /**
+     * Сбор списка жертв
+     */
+    public static function fillSacrifice()
+    {
+        // todo : get information from self::$link and send it to Adviser.
+    }
 }

@@ -26,10 +26,7 @@ abstract class Soldier
     {
         // todo: more accurate check
         $path = parse_url($this->link);
-        $host = $path['host'];
-
-        $hosts = explode('.', $host);
-        return $hosts[1];
+        return $path['host'];
     }
 
     abstract public function store():bool;
